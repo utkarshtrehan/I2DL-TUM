@@ -149,11 +149,15 @@ def compute_image_mean_and_std(images):
     # Hint: You can use numpy to calculate mean and standard deviation     #
     ########################################################################
 
-    pass
+    #pass
 
     ########################################################################
     #                           END OF YOUR CODE                           #
     ########################################################################
+
+    mean = np.mean(images, axis=(0,1,2))
+    std = np.std(images, axis=(0, 1, 2))
+
     return mean, std
 
 
@@ -178,11 +182,14 @@ class RescaleTransform:
         #   - to (self.min, self.max)                                          #
         ########################################################################
 
-        pass
+        # pass
 
         ########################################################################
         #                           END OF YOUR CODE                           #
         ########################################################################
+
+        images = images / (self._data_max/self.max)
+
         return images
 
 
