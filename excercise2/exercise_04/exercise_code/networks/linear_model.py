@@ -50,6 +50,8 @@ class LinearModel(Network):
         # Implement the forward pass and return the output of the model.        #
         #########################################################################
 
+        y = X.dot(self.W)
+
         #########################################################################
         #                       END OF YOUR CODE                                #
         #########################################################################
@@ -69,7 +71,7 @@ class LinearModel(Network):
         # Implement the backward pass. Return the gradient wrt W, dW              #
         # The data X are stored in self.cache.                                    #
         ###########################################################################
-
+        dW = self.cache
         ###########################################################################
         #                           END OF YOUR CODE                              #
         ###########################################################################
@@ -82,3 +84,4 @@ class LinearModel(Network):
         if not os.path.exists(directory):
             os.makedirs(directory)
         pickle.dump(model, open(directory + '/' + self.model_name + '.p', 'wb'))
+

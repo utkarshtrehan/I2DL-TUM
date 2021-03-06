@@ -9,6 +9,7 @@ class CSVDataset(Dataset):
     CSVDataset class.
     Provide access to the Boston Housing Prices dataset. 
     """
+
     def __init__(self, target_column, transform=None, mode="train", *args, **kwargs):
         super().__init__(*args, **kwargs)
 
@@ -23,7 +24,8 @@ class CSVDataset(Dataset):
 
         # split the dataset into train - val - test with the ratio 60 - 20 - 20
         assert mode in ["train", "val", "test"], "wrong mode for dataset given"
-        train, val, test = np.split(self.df.sample(frac=1, random_state=0), [int(.6*len(self.df)), int(.8*len(self.df))])
+        train, val, test = np.split(self.df.sample(frac=1, random_state=0),
+                                    [int(.6 * len(self.df)), int(.8 * len(self.df))])
         if mode == "train":
             self.df = train
         elif mode == "val":
@@ -33,10 +35,9 @@ class CSVDataset(Dataset):
 
         self.data = self.df.loc[:, self.df.columns != self.target_column]
         self.targets = self.df[self.target_column]
-        self.transforms = transform if transform is not None else lambda x : x
+        self.transforms = transform if transform is not None else lambda x: x
 
         self.data.iloc[0]['OverallQual'] = np.nan
-
 
     def __len__(self):
         return len(self.data)
@@ -53,7 +54,7 @@ class CSVDataset(Dataset):
         data_dict = {}
         data_dict['features'] = self.data.iloc[index]
         data_dict['target'] = self.targets.iloc[index]
-    
+
         return self.transforms(data_dict)
 
 
@@ -61,6 +62,7 @@ class FeatureSelectorAndNormalizationTransform:
     """
     Select some numerical features and normalize them between 0 and 1.
     """
+
     def __init__(self, column_stats, target_column):
         """
         :param column_stats: a dictionary mapping the column name to the
@@ -86,7 +88,7 @@ class FeatureSelectorAndNormalizationTransform:
                 if np.isnan(data_dict['features'][column_idx]):
                     mean_col_val = self.column_stats[column_idx]['mean']
                     data_dict['features'][column_idx] = mean_col_val
-                
+
                 old_value = data_dict['features'][column_idx]
                 normalized = normalize_column(old_value, column_idx)
                 data_dict['features'][column_idx] = normalized

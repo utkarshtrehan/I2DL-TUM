@@ -51,7 +51,7 @@ class Classifier(Network):
         # that you need to implement the function self.sigmoid() for that       #  
         #########################################################################
 
-
+        y = self.sigmoid(X.dot(self.W))
 
         #########################################################################
         #                       END OF YOUR CODE                                #
@@ -74,9 +74,10 @@ class Classifier(Network):
         # W, X and y and note that the derivative of the sigmoid fct can be       #
         # expressed by sigmoids itself (--> use the function self.sigmoid() here) # 
         ###########################################################################
-
-
-
+        X = self.cache
+        dW = X
+        dz = y * (1-y)
+        dW*=dz
         ###########################################################################
         #                           END OF YOUR CODE                              #
         ###########################################################################
@@ -89,7 +90,7 @@ class Classifier(Network):
         :param x: input of the sigmoid, np.array of any shape
         :return: output of the sigmoid with same shape as input vector x
         """
-        out = None
+        out = 1 / (1 + np.exp(-x))
         #########################################################################
         # TODO:                                                                 #
         # Implement the sigmoid function, return out                            #

@@ -51,13 +51,12 @@ class DummyNetwork(Network):
         #                                                                      #
         ########################################################################
 
-        pass
-
+        x = 1 / (1 + np.exp(-x))
         ########################################################################
         #                           END OF YOUR CODE                           #
         ########################################################################
         
-        return 1 / (1 + np.exp(-x))
+        return x
 
     def __repr__(self):
         return "A dummy class that would compute sigmoid function"

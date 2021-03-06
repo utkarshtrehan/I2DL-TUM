@@ -99,7 +99,11 @@ class Solver(object):
         #   Hint: don't forget to divide number of samples when computing the     #
         #   gradient!                                                             #
         ###########################################################################
+        model_forward, model_backward = model(X_train)
+        loss, loss_grad = loss_func(model_forward, y_train)
 
+        grad = loss_grad.T.dot(model_backward) / loss_grad.shape[0]
+        opt.step(grad.T)
         ###########################################################################
         #                           END OF YOUR CODE                              #
         ###########################################################################  

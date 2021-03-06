@@ -34,7 +34,7 @@ class L1(Loss):
         # TODO:                                                                 #
         # Implement the forward pass and return the output of the L1 loss.      #
         #########################################################################
-
+        result = np.abs(y_truth - y_out)
         #########################################################################
         #                       END OF YOUR CODE                                #
         #########################################################################
@@ -57,7 +57,15 @@ class L1(Loss):
         # hint: you may use np.where here.                                        #
         ###########################################################################
 
+        gradient = y_out - y_truth
 
+        zero_loc = np.where(gradient==0)
+        negative_loc = np.where(gradient<0)
+        positive_loc = np.where(gradient>0)
+
+        gradient[zero_loc] = 0
+        gradient[positive_loc] = 1
+        gradient[negative_loc] = -1
 
         ###########################################################################
         #                           END OF YOUR CODE                              #
@@ -81,6 +89,8 @@ class MSE(Loss):
         # Implement the forward pass and return the output of the MSE loss.     #
         #########################################################################
 
+        result = np.square(y_truth - y_out)
+
         #########################################################################
         #                       END OF YOUR CODE                                #
         #########################################################################
@@ -102,6 +112,7 @@ class MSE(Loss):
         # Implement the backward pass. Return the gradient wrt y_out              #
         ###########################################################################
 
+        gradient = 2*(y_out - y_truth)
 
         ###########################################################################
         #                           END OF YOUR CODE                              #
@@ -125,6 +136,7 @@ class BCE(Loss):
         # Implement the forward pass and return the output of the BCE loss.     #
         #########################################################################
 
+        result = -y_truth * np.log(y_out) - (1 - y_truth) * np.log(1 - y_out)
 
         #########################################################################
         #                       END OF YOUR CODE                                #
@@ -148,6 +160,7 @@ class BCE(Loss):
         # Implement the backward pass. Return the gradient wrt y_out              #
         ###########################################################################
 
+        gradient = - (y_truth/y_out) + (1 - y_truth) / (1 - y_out)
 
         ###########################################################################
         #                           END OF YOUR CODE                              #
