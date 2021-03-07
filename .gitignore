@@ -2,7 +2,7 @@
 .DS_Store
 
 # Datasets
-/excercise1/datasets/cifar10/
+/exercise?/datasets/cifar10/
 
 # User-specific stuff
 .idea/**/workspace.xml
